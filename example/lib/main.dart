@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:keywords_research_generator/keywords_research_generator.dart';
 
 void main() => runApp(const KeywordsResearchApp());

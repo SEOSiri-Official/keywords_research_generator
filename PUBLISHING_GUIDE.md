@@ -1,4 +1,4 @@
-﻿# 🚀 Publishing Guide — keywords_research_generator
+# 🚀 Publishing Guide — keywords_research_generator
 ## Publisher: seosiri.com → pub.dev/publishers/seosiri.com
 
 ---

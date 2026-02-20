@@ -1,4 +1,4 @@
-﻿/// Search intent classification for keywords.
+/// Search intent classification for keywords.
 ///
 /// Based on the four core search intent types used in SEO strategy.
 enum SearchIntent {

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../services/pipeline/keyword_cluster_builder.dart';
 import '../models/keyword_model.dart';
 import 'intent_badge.dart';

@@ -1,4 +1,4 @@
-﻿import 'dart:math' as math;
+import 'dart:math' as math;
 import '../../models/keyword_metrics.dart';
 import '../../models/search_intent.dart';
 import '../../models/keyword_type.dart';

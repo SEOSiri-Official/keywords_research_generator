@@ -1,4 +1,4 @@
-﻿import 'search_intent.dart';
+import 'search_intent.dart';
 import 'keyword_type.dart';
 
 /// Filter parameters for keyword generation and search.

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../services/free_apis/google_search_console_service.dart';
 
 /// A widget to connect Google Search Console — shows striking distance

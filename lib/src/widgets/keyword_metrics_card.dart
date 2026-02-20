@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../models/keyword_model.dart';
 import '../models/keyword_type.dart';
 import 'intent_badge.dart';

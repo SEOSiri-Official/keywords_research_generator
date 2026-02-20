@@ -1,4 +1,4 @@
-﻿## 1.0.0
+## 1.0.0
 
 **Initial release — published by [seosiri.com](https://www.seosiri.com)**
 

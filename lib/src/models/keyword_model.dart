@@ -1,4 +1,4 @@
-﻿import 'search_intent.dart';
+import 'search_intent.dart';
 import 'keyword_type.dart';
 import 'keyword_metrics.dart';
 import 'seo_hint.dart';

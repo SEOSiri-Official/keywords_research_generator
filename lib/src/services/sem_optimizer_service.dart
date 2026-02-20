@@ -1,4 +1,4 @@
-﻿import '../models/keyword_model.dart';
+import '../models/keyword_model.dart';
 import '../models/seo_hint.dart';
 import '../models/search_intent.dart';
 import '../models/keyword_type.dart';

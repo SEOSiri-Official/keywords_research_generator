@@ -6,7 +6,7 @@
 
 > **A powerful Flutter plugin for keyword research, analysis, and generation.**
 >
-> Developed and published by **[seosiri.com](https://www.seosiri.com)** — Your SEO Intelligence Platform.
+> Developed and published by **[seosiri.com](https://www.seosiri.com)** ï¿½ Your SEO Intelligence Platform.
 
 ---
 
@@ -151,7 +151,7 @@ final aeoVariants = voiceService.generateAeoVariants('flutter seo plugin');
 KeywordListWidget(
   result: result,
   onKeywordTap: (keyword) {
-    // Handle keyword tap — show detail sheet, copy to clipboard, etc.
+    // Handle keyword tap ï¿½ show detail sheet, copy to clipboard, etc.
   },
 )
 ```
@@ -171,7 +171,7 @@ KeywordFilterPanel(
 
 ```dart
 KeywordSearchBar(
-  hint: 'Enter seed keyword…',
+  hint: 'Enter seed keywordï¿½',
   isLoading: isGenerating,
   onSearch: (seed) => generateKeywords(seed),
 )
@@ -203,8 +203,8 @@ KeywordMetricsCard(
 
 | Type | Word Count | Competition | Best Use |
 |---|---|---|---|
-| **Short Tail** | 1–2 words | Very high | Brand awareness, broad reach |
-| **Medium Tail** | 3–4 words | Medium | Balanced SEO strategy |
+| **Short Tail** | 1ï¿½2 words | Very high | Brand awareness, broad reach |
+| **Medium Tail** | 3ï¿½4 words | Medium | Balanced SEO strategy |
 | **Long Tail** | 5+ words | Low | Targeted SEO, AEO, voice search |
 
 ---
@@ -212,7 +212,7 @@ KeywordMetricsCard(
 ## ?? Voice Search & AEO
 
 The `VoiceSearchService` automatically generates:
-- Question variants ("What is…", "How do I…", "Which is the best…")
+- Question variants ("What isï¿½", "How do Iï¿½", "Which is the bestï¿½")
 - Conversational phrases for smart speaker queries
 - AEO-targeted phrases for featured snippets and knowledge panels
 
@@ -264,4 +264,4 @@ E-commerce, SaaS, Healthcare, Finance, Education, Real Estate, Travel, Food & Be
 
 ## ?? License
 
-MIT © [seosiri.com](https://www.seosiri.com)
+MIT ï¿½ [seosiri.com](https://www.seosiri.com)

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../models/search_intent.dart';
 
 /// A small colored badge displaying the search intent of a keyword.

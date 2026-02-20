@@ -1,4 +1,4 @@
-﻿import 'keyword_model.dart';
+import 'keyword_model.dart';
 import 'keyword_filter.dart';
 import 'search_intent.dart';
 import 'keyword_type.dart';

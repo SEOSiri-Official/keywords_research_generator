@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Animated progress overlay displayed while keyword generation runs.
 /// Shows real step-by-step progress from the multi-API pipeline.

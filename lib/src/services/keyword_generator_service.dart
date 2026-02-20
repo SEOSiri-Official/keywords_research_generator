@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:uuid/uuid.dart';
 
 import '../models/keyword_model.dart';

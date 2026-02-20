@@ -1,4 +1,4 @@
-﻿import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:keywords_research_generator/keywords_research_generator.dart';
 
 void main() {

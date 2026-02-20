@@ -1,4 +1,4 @@
-﻿/// Static word lists used to expand seed keywords into rich phrase sets.
+/// Static word lists used to expand seed keywords into rich phrase sets.
 /// All lists have been curated for SEO/SEM relevance.
 class KeywordConstants {
   KeywordConstants._();

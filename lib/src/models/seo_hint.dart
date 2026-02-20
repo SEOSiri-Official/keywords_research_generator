@@ -1,4 +1,4 @@
-﻿/// A hint or recommendation for SEO, AEO, voice, or SEM optimization.
+/// A hint or recommendation for SEO, AEO, voice, or SEM optimization.
 class SeoHint {
   final SeoHintType type;
   final String title;

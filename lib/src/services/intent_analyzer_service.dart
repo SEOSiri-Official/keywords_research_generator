@@ -1,4 +1,4 @@
-﻿import '../models/search_intent.dart';
+import '../models/search_intent.dart';
 
 /// Analyses a keyword phrase and classifies its search intent.
 ///

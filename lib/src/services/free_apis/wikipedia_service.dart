@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../cache/keyword_cache_service.dart';
 import '../cache/rate_limiter.dart';

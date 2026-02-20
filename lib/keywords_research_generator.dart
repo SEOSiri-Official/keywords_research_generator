@@ -1,4 +1,4 @@
-﻿/// Keywords Research Generator — World-class Flutter plugin
+/// Keywords Research Generator — World-class Flutter plugin
 /// powered entirely by free APIs.
 ///
 /// Free API stack:

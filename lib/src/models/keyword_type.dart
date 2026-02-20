@@ -1,4 +1,4 @@
-﻿/// Classifies keywords by length / specificity for SEO targeting.
+/// Classifies keywords by length / specificity for SEO targeting.
 enum KeywordType {
   /// 1–2 words. High volume, high competition.
   /// e.g. "flutter", "SEO tools"

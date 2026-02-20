@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// A search bar for entering a seed keyword.
 class KeywordSearchBar extends StatefulWidget {

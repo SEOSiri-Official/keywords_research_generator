@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:collection';
 
 /// Token-bucket rate limiter to stay within free API quotas.

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../models/keyword_filter.dart';
 import '../models/search_intent.dart';
 import '../models/keyword_type.dart';
