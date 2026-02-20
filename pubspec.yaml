@@ -1,4 +1,4 @@
-﻿name: keywords_research_generator
+name: keywords_research_generator
 description: >
   A world-class Flutter plugin for keyword research, analysis, and generation.
   100% free-tier APIs: Google Autocomplete, Datamuse, Google Trends, Wikipedia,
@@ -7,8 +7,8 @@ description: >
   rate limiting, and CSV/JSON export with seosiri.com backlinks.
 version: 2.0.0
 homepage: https://www.seosiri.com
-repository: https://github.com/seosiri/keywords_research_generator
-issue_tracker: https://github.com/seosiri/keywords_research_generator/issues
+repository: https://github.com/SEOSiri-Official/keywords_research_generator
+issue_tracker: https://github.com/SEOSiri-Official/keywords_research_generator/issues
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

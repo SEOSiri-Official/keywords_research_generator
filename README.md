@@ -1,4 +1,4 @@
-﻿# keywords_research_generator
+# keywords_research_generator
 
 [![pub.dev](https://img.shields.io/pub/v/keywords_research_generator.svg)](https://pub.dev/packages/keywords_research_generator)
 [![Publisher](https://img.shields.io/badge/publisher-seosiri.com-blue)](https://pub.dev/publishers/seosiri.com)
@@ -6,28 +6,28 @@
 
 > **A powerful Flutter plugin for keyword research, analysis, and generation.**
 >
-> Developed and published by **[seosiri.com](https://www.seosiri.com)** — Your SEO Intelligence Platform.
+> Developed and published by **[seosiri.com](https://www.seosiri.com)** � Your SEO Intelligence Platform.
 
 ---
 
-## ✨ Features
+## ? Features
 
 | Feature | Description |
 |---|---|
-| 🔍 **Keyword Generation** | Expand any seed keyword into 100+ phrases |
-| 🎯 **Search Intent** | Auto-classify as Informational / Navigational / Commercial / Transactional |
-| 📏 **Keyword Types** | Short-tail, Medium-tail, Long-tail classification |
-| 📊 **SEO Metrics** | Volume, difficulty, opportunity score, CTR potential |
-| 💰 **SEM Hints** | CPC, match types, bid strategy, ad copy angles |
-| 🎙 **Voice Search** | Conversational and question-based variant generation |
-| ⚡ **AEO** | Featured snippet and PAA targeting recommendations |
-| 🌍 **Region / Segment** | Filter by country, business segment, category |
-| 📤 **Export** | CSV and JSON download with [seosiri.com](https://www.seosiri.com) backlinks |
-| 📦 **Drop-in Widgets** | `KeywordListWidget`, `KeywordFilterPanel`, `KeywordMetricsCard` |
+| ?? **Keyword Generation** | Expand any seed keyword into 100+ phrases |
+| ?? **Search Intent** | Auto-classify as Informational / Navigational / Commercial / Transactional |
+| ?? **Keyword Types** | Short-tail, Medium-tail, Long-tail classification |
+| ?? **SEO Metrics** | Volume, difficulty, opportunity score, CTR potential |
+| ?? **SEM Hints** | CPC, match types, bid strategy, ad copy angles |
+| ?? **Voice Search** | Conversational and question-based variant generation |
+| ? **AEO** | Featured snippet and PAA targeting recommendations |
+| ?? **Region / Segment** | Filter by country, business segment, category |
+| ?? **Export** | CSV and JSON download with [seosiri.com](https://www.seosiri.com) backlinks |
+| ?? **Drop-in Widgets** | `KeywordListWidget`, `KeywordFilterPanel`, `KeywordMetricsCard` |
 
 ---
 
-## 🚀 Getting Started
+## ?? Getting Started
 
 ### Installation
 
@@ -46,7 +46,7 @@ flutter pub get
 
 ---
 
-## 📖 Usage
+## ?? Usage
 
 ### 1. Generate keywords from a seed
 
@@ -119,7 +119,7 @@ await exporter.shareCsv(result);
 ```dart
 final intentAnalyzer = IntentAnalyzerService();
 final intent = intentAnalyzer.classify('best flutter keyword plugin');
-// → SearchIntent.commercial
+// ? SearchIntent.commercial
 
 final seoAnalyzer = SeoAnalyzerService();
 final semOptimizer = SemOptimizerService();
@@ -135,15 +135,15 @@ final semHints = semOptimizer.generateSemHints(keyword);
 final voiceService = VoiceSearchService();
 
 final questions = voiceService.generateQuestionVariants('flutter seo plugin');
-// → ['what is flutter seo plugin', 'how to flutter seo plugin?', ...]
+// ? ['what is flutter seo plugin', 'how to flutter seo plugin?', ...]
 
 final aeoVariants = voiceService.generateAeoVariants('flutter seo plugin');
-// → ['what is flutter seo plugin', 'flutter seo plugin definition', ...]
+// ? ['what is flutter seo plugin', 'flutter seo plugin definition', ...]
 ```
 
 ---
 
-## 🎨 Widgets
+## ?? Widgets
 
 ### Drop-in full list view
 
@@ -151,7 +151,7 @@ final aeoVariants = voiceService.generateAeoVariants('flutter seo plugin');
 KeywordListWidget(
   result: result,
   onKeywordTap: (keyword) {
-    // Handle keyword tap — show detail sheet, copy to clipboard, etc.
+    // Handle keyword tap � show detail sheet, copy to clipboard, etc.
   },
 )
 ```
@@ -171,7 +171,7 @@ KeywordFilterPanel(
 
 ```dart
 KeywordSearchBar(
-  hint: 'Enter seed keyword…',
+  hint: 'Enter seed keyword�',
   isLoading: isGenerating,
   onSearch: (seed) => generateKeywords(seed),
 )
@@ -188,37 +188,37 @@ KeywordMetricsCard(
 
 ---
 
-## 🔎 Search Intent Classification
+## ?? Search Intent Classification
 
 | Intent | Description | Signals |
 |---|---|---|
-| 📚 **Informational** | User wants to learn | "what", "how", "guide", "learn" |
-| 🧭 **Navigational** | User looks for a specific site | "login", "official", "docs" |
-| 🛒 **Commercial** | User is researching options | "best", "review", "compare", "vs" |
-| 💳 **Transactional** | User is ready to act | "buy", "sign up", "free trial" |
+| ?? **Informational** | User wants to learn | "what", "how", "guide", "learn" |
+| ?? **Navigational** | User looks for a specific site | "login", "official", "docs" |
+| ?? **Commercial** | User is researching options | "best", "review", "compare", "vs" |
+| ?? **Transactional** | User is ready to act | "buy", "sign up", "free trial" |
 
 ---
 
-## 📊 Keyword Type Classification
+## ?? Keyword Type Classification
 
 | Type | Word Count | Competition | Best Use |
 |---|---|---|---|
-| **Short Tail** | 1–2 words | Very high | Brand awareness, broad reach |
-| **Medium Tail** | 3–4 words | Medium | Balanced SEO strategy |
+| **Short Tail** | 1�2 words | Very high | Brand awareness, broad reach |
+| **Medium Tail** | 3�4 words | Medium | Balanced SEO strategy |
 | **Long Tail** | 5+ words | Low | Targeted SEO, AEO, voice search |
 
 ---
 
-## 🎙 Voice Search & AEO
+## ?? Voice Search & AEO
 
 The `VoiceSearchService` automatically generates:
-- Question variants ("What is…", "How do I…", "Which is the best…")
+- Question variants ("What is�", "How do I�", "Which is the best�")
 - Conversational phrases for smart speaker queries
 - AEO-targeted phrases for featured snippets and knowledge panels
 
 ---
 
-## 💰 SEM Optimisation
+## ?? SEM Optimisation
 
 The `SemOptimizerService` provides:
 - Recommended match types (Exact / Phrase / Broad Match)
@@ -229,7 +229,7 @@ The `SemOptimizerService` provides:
 
 ---
 
-## 📤 Export Formats
+## ?? Export Formats
 
 All exports include a **[seosiri.com](https://www.seosiri.com)** attribution backlink.
 
@@ -241,27 +241,27 @@ All exports include a **[seosiri.com](https://www.seosiri.com)** attribution bac
 
 ---
 
-## 🌍 Supported Regions
+## ?? Supported Regions
 
 Global, US, UK, CA, AU, IN, DE, FR, ES, IT, NL, BD, PK, NG, ZA, BR, SG, AE, JP, KR, and more.
 
 ---
 
-## 🏢 Supported Business Segments
+## ?? Supported Business Segments
 
 E-commerce, SaaS, Healthcare, Finance, Education, Real Estate, Travel, Food & Beverage, Retail, Technology, Legal, Marketing Agency, Non-profit, Hospitality, Manufacturing.
 
 ---
 
-## 🔗 Links
+## ?? Links
 
-- 🌐 **Website**: [www.seosiri.com](https://www.seosiri.com)
-- 📦 **pub.dev**: [pub.dev/publishers/seosiri.com](https://pub.dev/publishers/seosiri.com)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/seosiri/keywords_research_generator/issues)
-- 📘 **Docs**: [www.seosiri.com/p/flutter-plugin.html](https://www.seosiri.com/p/flutter-plugin.html)
+- ?? **Website**: [www.seosiri.com](https://www.seosiri.com)
+- ?? **pub.dev**: [pub.dev/publishers/seosiri.com](https://pub.dev/publishers/seosiri.com)
+- ?? **Issues**: [GitHub Issues](https://github.com/SEOSiri-Official/keywords_research_generator/issues)
+- ?? **Docs**: [www.seosiri.com/p/flutter-plugin.html](https://www.seosiri.com/p/flutter-plugin.html)
 
 ---
 
-## 📄 License
+## ?? License
 
-MIT © [seosiri.com](https://www.seosiri.com)
+MIT � [seosiri.com](https://www.seosiri.com)
