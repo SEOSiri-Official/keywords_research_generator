@@ -1,0 +1,18 @@
+﻿include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - example/**
+  errors:
+    missing_return: error
+    dead_code: warning
+
+linter:
+  rules:
+    avoid_empty_else: true
+    avoid_print: true
+    prefer_const_constructors: true
+    prefer_final_fields: true
+    unnecessary_const: true
+    use_key_in_widget_constructors: true
+    sort_constructors_first: false

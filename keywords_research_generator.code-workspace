@@ -1,0 +1,52 @@
+﻿{
+  "folders": [
+    {
+      "path": ".",
+      "name": "keywords_research_generator (plugin)"
+    },
+    {
+      "path": "example",
+      "name": "keywords_research_generator_example (demo app)"
+    }
+  ],
+  "settings": {
+    "dart.flutterSdkPath": null,
+    "dart.lineLength": 90,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "dart.debugExternalPackageLibraries": true,
+    "dart.debugSdkLibraries": false,
+    "[dart]": {
+      "editor.defaultFormatter": "Dart-Code.dart-code",
+      "editor.formatOnSave": true,
+      "editor.rulers": [90]
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "Dart-Code.flutter",
+      "Dart-Code.dart-code",
+      "eamodio.gitlens",
+      "usernamehw.errorlens"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Run Example App",
+        "request": "launch",
+        "type": "dart",
+        "program": "example/lib/main.dart"
+      },
+      {
+        "name": "Run Tests",
+        "request": "launch",
+        "type": "dart",
+        "program": "test/keywords_research_generator_test.dart"
+      }
+    ]
+  }
+}
