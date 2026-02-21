@@ -1,6 +1,11 @@
 ## 2.0.1
 
 - Fix: shorten pubspec description to meet pub.dev 180-char limit
+- Fix: update all dependencies to latest versions
+
+## 2.0.1
+
+- Fix: shorten pubspec description to meet pub.dev 180-char limit
 - Fix: update dependencies to latest versions for full pub points
 
 ## 1.0.0
