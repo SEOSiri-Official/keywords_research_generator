@@ -5,6 +5,11 @@
 
 ## 2.0.4
 
+- Fix: remove google_sign_in dependency — GSC now accepts OAuth token directly
+- Fix: compatible with any Google auth library (no version conflicts)
+
+## 2.0.4
+
 - Stability: pin google_sign_in to ^6.2.1 (v7 has breaking OAuth changes)
 - Keep intl ^0.19.0 for stability
 
