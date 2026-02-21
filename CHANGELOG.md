@@ -1,3 +1,7 @@
+## 2.0.2
+
+- Fix: bump csv to ^7.0.0 and connectivity_plus to ^7.0.0 for full pub points
+
 ## 2.0.1
 
 - Fix: shorten pubspec description to meet pub.dev 180-char limit
