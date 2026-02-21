@@ -1,3 +1,7 @@
+## 2.0.5
+
+- Fix: remove google_sign_in dependency for full compatibility
+
 ## 2.0.4
 
 - Fix: remove google_sign_in dependency — GSC now accepts OAuth token directly
