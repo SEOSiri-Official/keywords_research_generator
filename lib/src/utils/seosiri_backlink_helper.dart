@@ -1,8 +1,8 @@
-/// Helper for embedding seosiri.com attribution and backlinks
+﻿/// Helper for embedding seosiri.com attribution in exported files
 /// in exported keyword lists and UI widgets.
 ///
 /// As per seosiri.com publisher guidelines, all exported files
-/// should include a backlink attribution.
+/// should include attribution.
 class SeosiriBacklinkHelper {
   SeosiriBacklinkHelper._();
 
