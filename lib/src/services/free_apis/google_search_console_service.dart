@@ -1,73 +1,48 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:google_sign_in/google_sign_in.dart';
 import '../cache/keyword_cache_service.dart';
 import '../cache/rate_limiter.dart';
 
 /// Google Search Console API integration — 100% FREE.
 ///
-/// Requires the user to authenticate with their Google account.
-/// Gives REAL search data (clicks, impressions, CTR, position)
-/// for keywords on their own verified properties.
+/// Pass your OAuth access token directly — obtain it via your preferred
+/// OAuth flow (google_sign_in, oauth2, or any Google auth library).
 ///
-/// OAuth scopes: https://www.googleapis.com/auth/webmasters.readonly
-///
-/// Setup (one-time in your app):
-/// 1. Create project at console.cloud.google.com (free)
-/// 2. Enable "Search Console API"
-/// 3. Create OAuth 2.0 credentials (Web/Android/iOS)
-/// 4. Add OAuth client ID to your app
+/// Scopes required: https://www.googleapis.com/auth/webmasters.readonly
 class GoogleSearchConsoleService {
   static const _baseUrl =
       'https://searchconsole.googleapis.com/webmasters/v3';
 
-  static const _scopes = [
-    'https://www.googleapis.com/auth/webmasters.readonly',
-  ];
-
-  final _googleSignIn = GoogleSignIn(scopes: _scopes);
   final _cache = KeywordCacheService();
   final _client = http.Client();
 
-  GoogleSignInAccount? _account;
   String? _accessToken;
+  String? _userEmail;
 
-  // ─── Auth ──────────────────────────────────────────────────────────────────
+  // ── Auth ────────────────────────────────────────────────────
 
-  /// Signs in the user. Returns true if successful.
-  Future<bool> signIn() async {
-    try {
-      _account = await _googleSignIn.signIn();
-      if (_account == null) return false;
-
-      final auth = await _account!.authentication;
-      _accessToken = auth.accessToken;
-      return _accessToken != null;
-    } catch (_) {
-      return false;
-    }
+  /// Set access token obtained from your OAuth flow.
+  void setAccessToken(String token, {String? email}) {
+    _accessToken = token;
+    _userEmail = email;
   }
 
-  /// Signs out.
-  Future<void> signOut() async {
-    await _googleSignIn.signOut();
-    _account = null;
+  /// Clear credentials.
+  void signOut() {
     _accessToken = null;
+    _userEmail = null;
   }
 
-  bool get isSignedIn => _accessToken != null;
-  String? get userEmail => _account?.email;
+  bool get isSignedIn => _accessToken != null && _accessToken!.isNotEmpty;
+  String? get userEmail => _userEmail;
 
-  // ─── Properties ────────────────────────────────────────────────────────────
+  // ── Properties ──────────────────────────────────────────────
 
-  /// Lists verified Search Console properties for the signed-in user.
   Future<List<GscProperty>> listProperties() async {
     if (!isSignedIn) return [];
-
     try {
       final resp = await _get('/sites');
       if (resp == null) return [];
-
       final sites = resp['siteEntry'] as List? ?? [];
       return sites
           .map((s) => GscProperty.fromJson(s as Map<String, dynamic>))
@@ -77,12 +52,8 @@ class GoogleSearchConsoleService {
     }
   }
 
-  // ─── Keyword Data ──────────────────────────────────────────────────────────
+  // ── Keyword Data ────────────────────────────────────────────
 
-  /// Returns real keyword performance data for [siteUrl].
-  ///
-  /// [startDate] and [endDate] in 'YYYY-MM-DD' format.
-  /// Default: last 90 days.
   Future<List<GscKeywordRow>> getKeywords({
     required String siteUrl,
     String? startDate,
@@ -90,7 +61,6 @@ class GoogleSearchConsoleService {
     int rowLimit = 1000,
     List<String> dimensions = const ['query'],
     String? country,
-    String? device,
   }) async {
     if (!isSignedIn) return [];
 
@@ -99,8 +69,7 @@ class GoogleSearchConsoleService {
         DateTime(now.year, now.month - 3, now.day)
             .toIso8601String()
             .substring(0, 10);
-    final end =
-        endDate ?? now.toIso8601String().substring(0, 10);
+    final end = endDate ?? now.toIso8601String().substring(0, 10);
 
     final cacheKey = 'gsc_${siteUrl}_${start}_$end';
     final cached = await _cache.getStringList(cacheKey);
@@ -155,7 +124,6 @@ class GoogleSearchConsoleService {
         );
       }).where((r) => r.query.isNotEmpty).toList();
 
-      // Cache.
       await _cache.setStringList(
           cacheKey, keywords.map((k) => k.toCsv()).toList());
 
@@ -165,8 +133,6 @@ class GoogleSearchConsoleService {
     }
   }
 
-  /// Returns "striking distance" keywords — position 11–20, high impressions.
-  /// These are closest to page 1 with minimal effort.
   Future<List<GscKeywordRow>> strikingDistanceKeywords({
     required String siteUrl,
     String? country,
@@ -182,7 +148,6 @@ class GoogleSearchConsoleService {
       ..sort((a, b) => b.impressions.compareTo(a.impressions));
   }
 
-  /// Returns top performing keywords (position 1–3).
   Future<List<GscKeywordRow>> topKeywords({
     required String siteUrl,
     int limit = 50,
@@ -195,7 +160,6 @@ class GoogleSearchConsoleService {
       ..sort((a, b) => b.clicks.compareTo(a.clicks));
   }
 
-  /// Detects keyword cannibalization — multiple pages competing for same query.
   Future<List<GscKeywordRow>> findCannibalizationRisks({
     required String siteUrl,
   }) async {
@@ -203,20 +167,17 @@ class GoogleSearchConsoleService {
       siteUrl: siteUrl,
       dimensions: ['query', 'page'],
     );
-
-    // Group by query — queries appearing on 2+ pages = risk.
     final byQuery = <String, List<GscKeywordRow>>{};
     for (final row in withPage) {
       byQuery.putIfAbsent(row.query, () => []).add(row);
     }
-
     return byQuery.entries
         .where((e) => e.value.length > 1)
         .map((e) => e.value.first)
         .toList();
   }
 
-  // ─── HTTP Helpers ──────────────────────────────────────────────────────────
+  // ── HTTP ────────────────────────────────────────────────────
 
   Future<Map<String, dynamic>?> _get(String path) async {
     try {
@@ -229,8 +190,6 @@ class GoogleSearchConsoleService {
             },
           )
           .timeout(const Duration(seconds: 10));
-
-      if (resp.statusCode == 401) await _refreshToken();
       if (resp.statusCode != 200) return null;
       return jsonDecode(resp.body) as Map<String, dynamic>;
     } catch (_) {
@@ -251,8 +210,6 @@ class GoogleSearchConsoleService {
             body: jsonEncode(body),
           )
           .timeout(const Duration(seconds: 10));
-
-      if (resp.statusCode == 401) await _refreshToken();
       if (resp.statusCode != 200) return null;
       return jsonDecode(resp.body) as Map<String, dynamic>;
     } catch (_) {
@@ -260,23 +217,15 @@ class GoogleSearchConsoleService {
     }
   }
 
-  Future<void> _refreshToken() async {
-    if (_account == null) return;
-    final auth = await _account!.authentication;
-    _accessToken = auth.accessToken;
-  }
-
   void dispose() => _client.close();
 }
 
-// ─── Data models ──────────────────────────────────────────────────────────────
+// ── Models ──────────────────────────────────────────────────────
 
 class GscProperty {
   final String siteUrl;
   final String permissionLevel;
-
   const GscProperty({required this.siteUrl, required this.permissionLevel});
-
   factory GscProperty.fromJson(Map<String, dynamic> json) => GscProperty(
         siteUrl: json['siteUrl'] as String,
         permissionLevel: json['permissionLevel'] as String? ?? 'siteOwner',
@@ -300,13 +249,8 @@ class GscKeywordRow {
     this.page,
   });
 
-  /// CTR as percentage string.
   String get ctrPercent => '${(ctr * 100).toStringAsFixed(1)}%';
-
-  /// Rounded position.
   String get positionLabel => position.toStringAsFixed(1);
-
-  /// Is this a striking distance keyword?
   bool get isStrikingDistance => position >= 11 && position <= 20;
 
   String toCsv() =>

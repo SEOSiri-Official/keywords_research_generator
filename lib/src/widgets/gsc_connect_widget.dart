@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../services/free_apis/google_search_console_service.dart';
 
-/// A widget to connect Google Search Console — shows striking distance
-/// keywords, top performers, and cannibalization risks.
+/// Widget to connect Google Search Console via access token.
 ///
-/// Completely FREE — uses Google OAuth.
+/// Obtain an OAuth access token using your preferred auth library
+/// (google_sign_in, oauth2, etc.) and pass it via [onTokenProvided].
 class GscConnectWidget extends StatefulWidget {
   final GoogleSearchConsoleService gscService;
   final void Function(List<GscKeywordRow> keywords)? onDataLoaded;
@@ -26,17 +26,23 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
   List<GscKeywordRow> _strikingDistance = [];
   List<GscKeywordRow> _topKeywords = [];
   String? _error;
+  final _tokenController = TextEditingController();
+
+  @override
+  void dispose() {
+    _tokenController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.gscService.isSignedIn) return _signInCard();
+    if (!widget.gscService.isSignedIn) return _tokenInputCard();
     if (_properties.isEmpty) return _loadPropertiesCard();
     if (_selected == null) return _propertyPicker();
     return _dataView();
   }
 
-  // ─── Sign-in card ──────────────────────────────────────────────────────────
-  Widget _signInCard() {
+  Widget _tokenInputCard() {
     return Card(
       margin: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -57,9 +63,8 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Get REAL keyword data — clicks, impressions, '
-              'position — from your own verified properties. '
-              '100% FREE via Google OAuth.',
+              'Paste your Google OAuth access token to load real '
+              'keyword data from your verified GSC properties.',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
             ),
@@ -67,18 +72,29 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
             const _FeatureRow(icon: '📈', label: 'Striking distance keywords (pos 11–20)'),
             const _FeatureRow(icon: '🥇', label: 'Top performing keywords'),
             const _FeatureRow(icon: '⚠️', label: 'Cannibalization risk detection'),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _tokenController,
+              decoration: InputDecoration(
+                labelText: 'OAuth Access Token',
+                hintText: 'ya29.a0...',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                suffixIcon: const Icon(Icons.vpn_key),
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: _loading ? null : _signIn,
+                onPressed: _loading ? null : _connectWithToken,
                 icon: _loading
                     ? const SizedBox(
-                        width: 16,
-                        height: 16,
+                        width: 16, height: 16,
                         child: CircularProgressIndicator(strokeWidth: 2))
                     : const Icon(Icons.login),
-                label: const Text('Sign in with Google'),
+                label: const Text('Connect'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
@@ -88,7 +104,8 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
             ),
             if (_error != null) ...[
               const SizedBox(height: 8),
-              Text(_error!, style: const TextStyle(color: Colors.red, fontSize: 12)),
+              Text(_error!,
+                  style: const TextStyle(color: Colors.red, fontSize: 12)),
             ],
           ],
         ),
@@ -96,7 +113,6 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
     );
   }
 
-  // ─── Load properties ───────────────────────────────────────────────────────
   Widget _loadPropertiesCard() {
     return Card(
       margin: const EdgeInsets.all(16),
@@ -105,7 +121,7 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Signed in as ${widget.gscService.userEmail}',
+            Text('Connected as ${widget.gscService.userEmail ?? "GSC User"}',
                 style: const TextStyle(fontWeight: FontWeight.w600)),
             const SizedBox(height: 12),
             ElevatedButton.icon(
@@ -123,7 +139,6 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
     );
   }
 
-  // ─── Property picker ───────────────────────────────────────────────────────
   Widget _propertyPicker() {
     return Card(
       margin: const EdgeInsets.all(16),
@@ -137,7 +152,8 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
                 style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ..._properties.map((p) => ListTile(
-                  title: Text(p.siteUrl, style: const TextStyle(fontSize: 13)),
+                  title: Text(p.siteUrl,
+                      style: const TextStyle(fontSize: 13)),
                   subtitle: Text(p.permissionLevel,
                       style: const TextStyle(fontSize: 11)),
                   leading: const Icon(Icons.language),
@@ -150,15 +166,14 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
     );
   }
 
-  // ─── Data view ─────────────────────────────────────────────────────────────
   Widget _dataView() {
     return DefaultTabController(
       length: 2,
       child: Column(
         children: [
-          // Header
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [
                 Expanded(
@@ -201,41 +216,39 @@ class _GscConnectWidgetState extends State<GscConnectWidget> {
     );
   }
 
-  // ─── Actions ───────────────────────────────────────────────────────────────
-
-  Future<void> _signIn() async {
-    setState(() {_loading = true; _error = null;});
-    final success = await widget.gscService.signIn();
+  Future<void> _connectWithToken() async {
+    final token = _tokenController.text.trim();
+    if (token.isEmpty) {
+      setState(() => _error = 'Please enter an access token.');
+      return;
+    }
+    setState(() { _loading = true; _error = null; });
+    widget.gscService.setAccessToken(token);
+    await _loadProperties();
     setState(() => _loading = false);
-    if (success) {
-      _loadProperties();
-    } else {
-      setState(() => _error = 'Sign-in failed. Try again.');
+    if (_properties.isEmpty) {
+      widget.gscService.signOut();
+      setState(() => _error = 'Invalid token or no properties found.');
     }
   }
 
   Future<void> _loadProperties() async {
     setState(() => _loading = true);
     final props = await widget.gscService.listProperties();
-    setState(() {
-      _properties = props;
-      _loading = false;
-    });
+    setState(() { _properties = props; _loading = false; });
   }
 
   Future<void> _loadData(GscProperty property) async {
-    setState(() {_selected = property; _loading = true;});
-
-    final striking = await widget.gscService.strikingDistanceKeywords(
-        siteUrl: property.siteUrl);
-    final top = await widget.gscService.topKeywords(siteUrl: property.siteUrl);
-
+    setState(() { _selected = property; _loading = true; });
+    final striking = await widget.gscService
+        .strikingDistanceKeywords(siteUrl: property.siteUrl);
+    final top =
+        await widget.gscService.topKeywords(siteUrl: property.siteUrl);
     setState(() {
       _strikingDistance = striking;
       _topKeywords = top;
       _loading = false;
     });
-
     widget.onDataLoaded?.call([...striking, ...top]);
   }
 }
@@ -266,7 +279,9 @@ class _KeywordTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (rows.isEmpty) {
-      return Center(child: Text(emptyMsg, style: const TextStyle(color: Colors.grey)));
+      return Center(
+          child: Text(emptyMsg,
+              style: const TextStyle(color: Colors.grey)));
     }
     return ListView.builder(
       itemCount: rows.length,
@@ -276,7 +291,8 @@ class _KeywordTable extends StatelessWidget {
           dense: true,
           title: Text(r.query, style: const TextStyle(fontSize: 13)),
           subtitle: Text(
-            'Pos ${r.positionLabel} · ${r.clicks} clicks · ${r.impressions} impr · ${r.ctrPercent} CTR',
+            'Pos ${r.positionLabel} · ${r.clicks} clicks · '
+            '${r.impressions} impr · ${r.ctrPercent} CTR',
             style: const TextStyle(fontSize: 11),
           ),
           leading: CircleAvatar(
@@ -288,7 +304,8 @@ class _KeywordTable extends StatelessWidget {
               '${i + 1}',
               style: TextStyle(
                 fontSize: 10,
-                color: r.isStrikingDistance ? Colors.orange : Colors.green,
+                color:
+                    r.isStrikingDistance ? Colors.orange : Colors.green,
                 fontWeight: FontWeight.bold,
               ),
             ),
